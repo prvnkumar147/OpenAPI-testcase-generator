@@ -1,0 +1,21 @@
+{
+  "name": "apitive-testcase-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chakram": "^1.4.0",
+    "csv-parser": "^2.3.0",
+    "csv-writer": "^1.5.0",
+    "fs": "0.0.1-security",
+    "mocha": "^6.2.0",
+    "oatts": "^1.5.0",
+    "swagger-test-templates": "file:///home/praveen/Projects/swagger-test-templates"
+  }
+}
