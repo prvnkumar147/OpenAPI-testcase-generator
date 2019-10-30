@@ -15,7 +15,7 @@
     "csv-writer": "^1.5.0",
     "fs": "0.0.1-security",
     "mocha": "^6.2.0",
-    "oatts": "^1.5.0",
+    "oatts": "prvnkumar147/oatts#request_body_changes",
     "swagger-test-templates": "file:///home/praveen/Projects/swagger-test-templates"
   }
 }

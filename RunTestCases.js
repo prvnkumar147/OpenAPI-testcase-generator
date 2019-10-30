@@ -16,7 +16,15 @@ fs.readdir(testFolder, (err, files) => {
 			.pipe(csv())
 			.on('data', (row) => {
     
-			fc = fc.replace(row['TestParam'], row['ParamValue']);
+			if(row['TestParam'].includes("REQUEST_BODY")){
+				var paramValue = row["ParamValue"].replace("“", '"')
+					.replace("”", '"')
+					.replace("‘", "'")
+					.replace("’", "'")
+				fc = fc.replace(`"${row['TestParam']}"`, paramValue);
+			} else{
+				fc = fc.replace(row['TestParam'], row['ParamValue']);
+			}
 		}).on("end", (err) => {
 			fs.writeFile(wFile, fc, (err) => {
 				if (!err) {

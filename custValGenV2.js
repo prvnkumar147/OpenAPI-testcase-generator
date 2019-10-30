@@ -86,42 +86,11 @@ const generateCustomValues = (swagg) => {
 				}
 				//Adding code for handling request body param
 				if (operationsTypes.requestBody){
-						var reqBody = operationsTypes.requestBody
-						//console.log(reqBody)
-						if (reqBody.content){
-							Object.keys(reqBody).forEach(function(reqbodycontent){
-								//console.log(reqbodycontent);
-								var reqContent = reqBody[reqbodycontent]
-								//var reqContent = reqBody.content
-								//console.log(reqContent)
-								Object.keys(reqContent).forEach(function(mediaTypeVal){
-									var mediaType = reqContent[mediaTypeVal]
-									//console.log(mediaType)
-									Object.keys(mediaType).forEach(function(reqSchema){
-						 				var schema = mediaType[reqSchema]
-						 				//console.log(schema)
 
-						 				if(schema.type){
-							 				if(schema.type != "object"){
-							 					var type = schema.type
-							 					console.log(type)
-							 				} else{
-							 					var type = schema.type
-							 					var forExample = schema.properties
-							 					console.log(forExample)
-							 				}
-
-							 			}
-						 			// 	Object.keys(schema).forEach(function(reqType){
-							 		// 		var requestType = schema[reqType]
-							 		// 		console.log(requestType)
-										// });
-						 			});
-								});
-						    });				
-						}							
+					var paramId = `${testCaseId}_REQUEST_BODY`;
+					respCode["requestBody"] = {"requestBody": paramId};
+					respJson['params'].push([paramId, "object", "", {}])
 				}
-				//Handler for request body param ends here
     		});
     	});	
     });
