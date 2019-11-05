@@ -2,13 +2,12 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path')
 const Mocha = require('mocha')
-const execFile = require("child_process").execFile;
+const exec = require("child_process").exec;
 
 const testFolder = './test6';
 const writeDir = "./TestFilesReady"
 
 const mocha = new Mocha();
-//mocha.options.timeout = 15000;
 mocha.options.opts = "./TestFilesReady/mocha.opts";
 
 var testFilesReady = fs.readdirSync(testFolder);
@@ -20,10 +19,12 @@ testFilesReady.forEach(fn => {
     var wFile = `${writeDir}/${fn}`;
     var fc = fs.readFileSync(rFile).toString();
 
+    //Replacing Test case ID in the generated code with the value provided in CSV
+
 	fs.createReadStream('out.csv')
 		.pipe(csv())
 		.on('data', (row) => {
-	//console.log(row);
+	
 	if(row['TestParam'].includes("REQUEST_BODY")){
 		var paramValue = row["ParamValue"].replace("“", '"')
 			.replace("”", '"')
@@ -41,15 +42,15 @@ testFilesReady.forEach(fn => {
 			if (!err) {
 				console.log(`File written successfully => ${wFile}.`);
 			}
+
+			//Running the generated test cases in command line using exec method
+			
 			if (fileIndex == totalFiles) {
 				console.log("Added all the tests files to Mocha...");
-				execFile('/home/praveen/Projects/apitive-testcase-generator/node_modules/mocha/bin/mocha', ['--timeout 15000', '/home/praveen/Projects/apitive-testcase-generator/TestFilesReady/'], (error, stdout, stderr) => {
-					if (error) {
-						throw error;
-					}
-					console.log("STDOUT START:");
-					console.log(stdout);
-					console.log("STDOUT END");
+				exec('./node_modules/mocha/bin/mocha --opts ./TestFilesReady/mocha.opts ./TestFilesReady/', (error, stdout, stderr) => {
+				//console.log("STDOUT START:");
+				console.log(stdout);
+				//console.log("STDOUT END");
 				});
 			}
 		});
