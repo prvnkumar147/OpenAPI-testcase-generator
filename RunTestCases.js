@@ -7,8 +7,16 @@ const exec = require("child_process").exec;
 const testFolder = './test6';
 const writeDir = "./TestFilesReady"
 
+
+fs.mkdirSync(writeDir);
+fs.writeFile(writeDir+"/mocha.opts", "--timeout 15000", function(err) {
+if(err) {
+       console.log(err);
+   }
+})
+
 const mocha = new Mocha();
-mocha.options.opts = "./TestFilesReady/mocha.opts";
+
 
 var testFilesReady = fs.readdirSync(testFolder);
 const totalFiles = testFilesReady.length;
