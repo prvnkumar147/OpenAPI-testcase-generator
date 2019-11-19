@@ -13,9 +13,10 @@
     "chakram": "^1.4.0",
     "csv-parser": "^2.3.0",
     "csv-writer": "^1.5.0",
+    "express": "^4.17.1",
     "fs": "0.0.1-security",
     "mocha": "^6.2.0",
-    "oatts": "^1.5.0",
-    "swagger-test-templates": "file:///home/praveen/Projects/swagger-test-templates"
+    "oatts": "git@github.com:prvnkumar147/oatts.git#request_body_changes",
+    "swagger-test-templates": "git@github.com:prvnkumar147/swagger-test-templates.git#apitive"
   }
 }
