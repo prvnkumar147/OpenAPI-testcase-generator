@@ -11,47 +11,62 @@ const csvWriter = createCsvWriter({
 	 {id: 'example', title: 'ParamExample'},
 	 ]
 });
-fs.readFile('./petstore30.json', 'utf8', (err, jsonString) => {
-	var swaggJson = JSON.parse(jsonString);
-	var customValues = CustValGen.generateCustomValues(swaggJson);
-	var host;
-	var scheme;
 
-	if (swaggJson.servers && swaggJson.servers.length > 0) {
-		var url = swaggJson.servers[0]["url"].split("://");
-		scheme = url[0];
-		host = url[1];
-	}
+const express = require('express');
 
-	console.log(JSON.stringify(customValues));
-	console.log(11111111111111111111111);
+const app = express()
+const port = 3000
 
+app.post('/generate', (req, res) => {
+//	generate(path)
+})
 
-	var options = {
-    // see "Options" section below for available options
-
-    	'writeTo': "./test6",
-    	'customValues': JSON.stringify(customValues),
-	};
-
-	if (host && scheme) {
-		options.host = host;
-		options.scheme = scheme;
-	}
-
-	var tests = oatts.generate('./petstore30.json', options);
-
-	//Write to csv
-	var paramsList = customValues.params
-	var csvData = [];
-	paramsList.forEach( (paramValue) => {
-		var row = {
-			'name': paramValue[0],
-			'type': paramValue[1],
-			'value': '',
-			'example': paramValue[3],
+function generate(fileName ){
+	fs.readFile(fileName, 'utf8', (err, jsonString) => {
+		var swaggJson = JSON.parse(jsonString);
+		var customValues = CustValGen.generateCustomValues(swaggJson);
+		var host;
+		var scheme;
+	
+		if (swaggJson.servers && swaggJson.servers.length > 0) {
+			var url = swaggJson.servers[0]["url"].split("://");
+			scheme = url[0];
+			host = url[1];
+		}
+	
+		console.log(JSON.stringify(customValues));
+		console.log(11111111111111111111111);
+	
+	
+		var options = {
+		// see "Options" section below for available options
+	
+			'writeTo': "./test6",
+			'customValues': JSON.stringify(customValues),
 		};
-		csvData.push(row);
+	
+		if (host && scheme) {
+			options.host = host;
+			options.scheme = scheme;
+		}
+	
+		var tests = oatts.generate(fileName, options);
+	
+		//Write to csv
+		var paramsList = customValues.params
+		var csvData = [];
+		paramsList.forEach( (paramValue) => {
+			var row = {
+				'name': paramValue[0],
+				'type': paramValue[1],
+				'value': '',
+				'example': paramValue[3],
+			};
+			csvData.push(row);
+		});
+		csvWriter.writeRecords(csvData);
 	});
-	csvWriter.writeRecords(csvData);
-});
+}
+
+app.listen(port, () => console.log(`TestCase Generator app listening on  port ${port} !`))
+
